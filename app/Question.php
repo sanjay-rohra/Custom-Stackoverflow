@@ -17,4 +17,24 @@ class Question extends BaseModel
         $this->attributes['title'] = $title;
         $this->attributes['slug'] = Str::slug($title);
     }
+    public function getUrlAttribute(){
+        return "questions/{$this->id}";
+    }
+
+    public function getCreatedDateAttribute(){
+        return $this->created_at->diffForHumans();
+    }
+
+
+
+    public function getAnswersStylesAttribute(){
+        if($this->answers_count > 0)
+        {
+            if($this->best_answer_id){
+                return "has-best-answer";
+            }
+            return "answered";
+        }
+        return "unanswered";
+    }
 }
