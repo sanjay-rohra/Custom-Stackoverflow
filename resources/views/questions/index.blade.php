@@ -3,6 +3,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+                <div class="d-flex justify-content-end mb-3">
+                    <a href="{{ route('questions.create') }}" class="btn btn-outline-primary">Ask A Question</a>
+                </div>
                 <div class="card">
                     <div class="card-header">
                         All Questions
@@ -34,7 +37,7 @@
                                         Asked by: <a href="#">{{$question->owner->name}}</a>
                                         <span class="text-muted">{{$question->created_date}}</span>
                                     </p>
-                                    <h4>{{Str::limit($question->body,250)}}</h4>
+                                    <h4>{!!  Str::limit($question->body,250)!!}}</h4>
                                 </div>
                             </div>
                         </div>

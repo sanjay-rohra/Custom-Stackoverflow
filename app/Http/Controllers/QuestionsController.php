@@ -1,11 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Requests\Questions\CreateQuestionRequest;
 use App\Question;
 use Illuminate\Http\Request;
 
 class QuestionsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth'])->except(['create','store','edit','update']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -25,6 +31,7 @@ class QuestionsController extends Controller
     public function create()
     {
         //
+        return view('questions.create');
     }
 
     /**
@@ -33,9 +40,14 @@ class QuestionsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateQuestionRequest $request)
     {
-        //
+        auth()->user()->questions()->create([
+            'title' => $request->title,
+            'body' => $request->body,
+        ]);
+        session()->flash('success','Question has been added successfully');
+        return redirect(route('questions.index'));
     }
 
     /**
@@ -55,9 +67,10 @@ class QuestionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Question $question)
     {
-        //
+        return view('questions.edit',compact('question'));
+
     }
 
     /**
@@ -67,9 +80,14 @@ class QuestionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateQuestionRequest $request, Question $question)
     {
-        //
+        $question->update([
+           "title"=> $request->title,
+            "body"=> $request->body,
+        ]);
+        session()->flash('success','Question has been modified successfully');
+        redirect(route('questions.index'));
     }
 
     /**
