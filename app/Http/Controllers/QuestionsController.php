@@ -90,7 +90,7 @@ class QuestionsController extends Controller
             "body" => $request->body,
         ]);
         session()->flash('success', 'Question has been modified successfully');
-        redirect(route('questions.index'));
+        return redirect(route('questions.index'));
     }
 
     /**
