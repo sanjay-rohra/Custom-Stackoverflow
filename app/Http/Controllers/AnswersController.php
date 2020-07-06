@@ -62,8 +62,8 @@ class AnswersController extends Controller
      */
     public function edit(Question $question, Answer $answer)
     {
-        $this->authorize('update',$answer);
-        return view('answers.edit',compact(['question','answer']));
+        $this->authorize('update', $answer);
+        return view('answers.edit', compact(['question', 'answer']));
     }
 
     /**
@@ -75,13 +75,13 @@ class AnswersController extends Controller
      * @return void
      * @throws AuthorizationException
      */
-    public function update(Request $request, Question $question,Answer $answer)
+    public function update(Request $request, Question $question, Answer $answer)
     {
-        $this->authorize('update',$answer);
+        $this->authorize('update', $answer);
         $answer->update([
-            'body'=>$request->body
+            'body' => $request->body
         ]);
-        session()->flash('success','Answer has been updated successfully');
+        session()->flash('success', 'Answer has been updated successfully');
         return redirect($question->url);
     }
 
@@ -89,17 +89,24 @@ class AnswersController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Answer $answer
+     * @param Question $question
      * @return void
+     * @throws AuthorizationException
+     * @throws \Exception
      */
-    public function destroy(Answer $answer)
+    public function destroy(Answer $answer, Question $question)
     {
-        //
+        $this->authorize('delete', $answer);
+        $answer->delete();
+        session()->flash('success', 'Answer has been deleted successfully');
+        return redirect($question->url);
     }
 
     /**
      * @param Answer $answer
      */
-    public function bestAnswer(Answer $answer){
+    public function bestAnswer(Answer $answer)
+    {
         $answer->question->markBestAnswer($answer);
         return redirect()->back();
     }
