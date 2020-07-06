@@ -5,7 +5,7 @@
                 <h3>Your answer</h3>
             </div>
             <div class="card-body">
-                <form action="" method="post">
+                <form action="{{ route('questions.answers.store',$question->id) }}" method="post">
                     @csrf
                     <div class="form-group">
                         <input type="hidden" id="body" name="body" value="{{ old('body') }}">
@@ -17,8 +17,6 @@
                     <div class="form-group">
                         <button type="submit" class="btn btn-outline-primary">Post your answer</button>
                     </div>
-
-
                 </form>
             </div>
         </div>
