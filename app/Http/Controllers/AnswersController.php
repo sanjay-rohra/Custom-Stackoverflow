@@ -95,4 +95,12 @@ class AnswersController extends Controller
     {
         //
     }
+
+    /**
+     * @param Answer $answer
+     */
+    public function bestAnswer(Answer $answer){
+        $answer->question->markBestAnswer($answer);
+        return redirect()->back();
+    }
 }
