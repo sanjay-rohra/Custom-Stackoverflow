@@ -51,6 +51,13 @@ class Question extends BaseModel
         $this->save();
     }
 
+    public function unMarkBest(Answer $answer)
+    {
+        $this->best_answer_id = NULL;
+        $this->save();
+    }
+
+
     public function favorites()
     {
         return $this->belongsToMany(User::class)->withTimestamps();
@@ -67,6 +74,10 @@ class Question extends BaseModel
         return $this->favorites()->where('user_id', Auth::id())->count() > 0;
     }
 
+
+    /*
+    * Mappinig answer to user
+    */
     public function votes()
     {
         return $this->morphToMany(User::class, 'vote')->withTimestamps();
@@ -98,7 +109,5 @@ class Question extends BaseModel
             $this->increment('votes_count');
             $this->increment('votes_count');
         }
-
     }
-
 }

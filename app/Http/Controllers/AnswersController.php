@@ -94,7 +94,7 @@ class AnswersController extends Controller
      * @throws AuthorizationException
      * @throws \Exception
      */
-    public function destroy(Answer $answer, Question $question)
+    public function destroy(Question $question,Answer $answer)
     {
         $this->authorize('delete', $answer);
         $answer->delete();
@@ -110,4 +110,12 @@ class AnswersController extends Controller
         $answer->question->markBestAnswer($answer);
         return redirect()->back();
     }
+
+    public function unMarkBestAnswer(Answer $answer)
+    {
+        //dd("unmark");
+        $answer->question->unMarkBest($answer);
+        return redirect()->back();
+    }
+
 }
