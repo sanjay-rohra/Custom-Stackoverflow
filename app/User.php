@@ -6,9 +6,6 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-/**
- * @method static pluck(string $string)
- */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -46,10 +43,15 @@ class User extends Authenticatable
     public function answers(){
         return $this->hasMany(Answer::class);
     }
+
     public function getAvatarAttribute(){
-        $size = 40;
+        $size= 40;
         $name = $this->name;
         return "https://ui-avatars.com/api/?name={$name}&rounded=true&size={$size}";
-
     }
+
+    public function favorites(){
+        return $this->belongsToMany(Question::class)->withTimestamps();
+    }
+
 }

@@ -20,7 +20,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('questions','QuestionsController')->except('show');
-Route::get('questions/{slug}','QuestionsController@show')->name('questions.show');
-Route::resource('questions.answers','AnswersController')->except('show','index');
-Route::post('answers/{answer}/best-answer','AnswersController@bestAnswer')->name('answers.bestAnswer');
+Route::resource('questions', 'QuestionsController')->except('show');
+Route::get('questions/{slug}', 'QuestionsController@show')->name('questions.show');
+Route::resource('questions.answers', 'AnswersController')->except('show', 'index');
+Route::post('answers/{answer}/best-answer', 'AnswersController@bestAnswer')->name('answers.bestAnswer');
+Route::post('questions/{question}/favorite', 'FavoritesController@store')->name('questions.favorite');
+
+Route::delete('questions/{question}/unfavorite', 'FavoritesController@destroy')->name('questions.unfavorite');
