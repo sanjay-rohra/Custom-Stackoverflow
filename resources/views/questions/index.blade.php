@@ -39,17 +39,20 @@
                                         {{--                                        <a href="{{route('questions.edit',$question->id)}}" class="btn btn-sm btn-outline-info">Edit</a>--}}
                                         <div class="d-flex flex-row">
                                             @can('update',$question)
-                                                <a href="{{route('questions.edit',$question->id)}}" class="btn btn-sm btn-outline-info mr-3">Edit</a>
+                                                <a href="{{route('questions.edit',$question->id)}}"
+                                                   class="btn btn-sm btn-outline-info mr-3">Edit</a>
                                             @endcan
 
                                             @can('delete',$question)
-                                                <form action="{{ route('questions.destroy',$question->id) }}" method="post">
+                                                <form action="{{ route('questions.destroy',$question->id) }}"
+                                                      method="post">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit"
                                                             onclick="return confirm('are you sure you want to delete this?')"
                                                             class="btn btn-sm btn-outline-danger"
-                                                    > Delete</button>
+                                                    > Delete
+                                                    </button>
                                                 </form>
                                             @endcan
                                         </div>
@@ -64,8 +67,10 @@
                         </div>
                         <hr>
                     @endforeach
-                    <div class="card-footer">
-                        {{$questions->links()}}
+                    <div>
+                        <div class="card-footer">
+                            {{$questions->links()}}
+                        </div>
                     </div>
                 </div>
             </div>
